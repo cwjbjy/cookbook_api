@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import configuration from './config';
 import { MarketModule } from './module/market/market.module';
+import { OrderModule } from './module/order/order.module';
 
 const { db } = configuration();
 
@@ -24,6 +25,7 @@ const { db } = configuration();
       `mongodb://${db.mongo.username}${db.mongo.username ? ':' : ''}${db.mongo.password}${db.mongo.password ? '@' : ''}${db.mongo.host}:${db.mongo.port}/${db.mongo.database}`,
     ),
     MarketModule,
+    OrderModule
   ],
   controllers: [],
   providers: [],

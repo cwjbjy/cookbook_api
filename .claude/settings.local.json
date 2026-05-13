@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(rtk find *)",
+      "Bash(openspec list *)",
+      "Bash(find D:\\\\\\\\uniapp\\\\\\\\market-app -type f -name \"*.vue\")",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\uniapp\\\\market-app\" -File -Recurse | Where-Object { $_.Extension -in '.vue','.ts','.js' } | Select-Object -First 30 FullName)",
+      "Bash(openspec new *)",
+      "Bash(openspec status *)",
+      "Bash(openspec instructions *)",
+      "WebFetch(domain:localhost)"
+    ]
+  }
+}

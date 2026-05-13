@@ -2,7 +2,11 @@ import * as fs from 'fs';
 import { join } from 'path';
 import * as path from 'path';
 
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -30,6 +34,24 @@ export class MarketService {
     });
 
     return '删除成功';
+  }
+
+  async updateCategory(id: string, name: string, image: string) {
+    const existing = await this.marketModel.findOne({ name, _id: { $ne: id } });
+    if (existing) {
+      throw new ConflictException('分类名称已存在');
+    }
+
+    const updated = await this.marketModel.findByIdAndUpdate(
+      id,
+      { $set: { name, image } },
+      { new: true },
+    );
+    if (!updated) {
+      throw new NotFoundException('分类不存在');
+    }
+
+    return updated;
   }
 
   async findAll() {

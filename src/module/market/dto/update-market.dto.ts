@@ -30,6 +30,20 @@ export class UpdateFoodDto extends PartialType(CreateFoodDto) {
   readonly oldImage: string;
 }
 
+export class UpdateCategoryDto {
+  @ApiProperty({ description: '分类id', required: true })
+  @IsNotEmpty({ message: '缺少分类id' })
+  readonly id: string;
+
+  @ApiProperty({ description: '分类名称', required: true })
+  @IsNotEmpty({ message: '缺少分类名称' })
+  readonly name: string;
+
+  @ApiProperty({ description: '分类图片', required: true })
+  @IsNotEmpty({ message: '缺少分类图片' })
+  readonly image: string;
+}
+
 export class DeleteFoodDto {
   @ApiProperty({ description: '菜的分类', required: true })
   @IsNotEmpty({ message: '缺少分类' })

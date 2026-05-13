@@ -17,6 +17,7 @@ import { diskStorage } from 'multer';
 
 import { CreateMarketDto, CreateUploadDto } from './dto/create-market.dto';
 import {
+  UpdateCategoryDto,
   UpdateMarketDto,
   UpdateFoodDto,
   DeleteFoodDto,
@@ -42,6 +43,20 @@ export class MarketController {
   @Delete('/deleteCategory')
   deleteCategory(@Query('name') name: string) {
     return this.marketService.deleteCategory(name);
+  }
+
+  @ApiOperation({ summary: '编辑分类' })
+  @ApiBody({
+    type: UpdateCategoryDto,
+    required: true,
+  })
+  @Put('/updateCategory')
+  updateCategory(@Body() updateCategoryDto: UpdateCategoryDto) {
+    return this.marketService.updateCategory(
+      updateCategoryDto.id,
+      updateCategoryDto.name,
+      updateCategoryDto.image,
+    );
   }
 
   @ApiOperation({ summary: '添加新菜品' })

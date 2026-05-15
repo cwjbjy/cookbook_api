@@ -31,10 +31,6 @@ export class CreateMarketDto {
   @ApiProperty({ description: '图标', required: true })
   @IsNotEmpty({ message: '缺少图标' })
   readonly image: string;
-
-  @ApiProperty({ description: '菜的标签' })
-  @IsNotEmpty({ message: '缺少菜品' })
-  readonly foods: CreateFoodDto[];
 }
 
 export class CreateUploadDto {

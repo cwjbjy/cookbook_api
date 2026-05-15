@@ -29,20 +29,23 @@ import { MarketService } from './market.service';
 export class MarketController {
   constructor(private readonly marketService: MarketService) {}
 
-  @ApiOperation({ summary: '插入单个分类' })
+  @ApiOperation({ summary: '新增菜单大类' })
   @ApiBody({
     type: CreateMarketDto,
     required: true,
   })
   @Post('/addCategory')
   create(@Body() createMarketDto: CreateMarketDto) {
-    return this.marketService.create(createMarketDto);
+    return this.marketService.create(
+      createMarketDto.name,
+      createMarketDto.image,
+    );
   }
 
   @ApiOperation({ summary: '删除整个分类' })
   @Delete('/deleteCategory')
-  deleteCategory(@Query('name') name: string) {
-    return this.marketService.deleteCategory(name);
+  deleteCategory(@Query('id') id: string) {
+    return this.marketService.deleteCategory(id);
   }
 
   @ApiOperation({ summary: '编辑分类' })

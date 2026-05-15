@@ -10,7 +10,6 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { CreateMarketDto } from './dto/create-market.dto';
 import {
   UpdateMarketDto,
   UpdateFoodDto,
@@ -22,17 +21,34 @@ import { Market } from './entities/market.entity';
 export class MarketService {
   constructor(@InjectModel(Market.name) private marketModel: Model<Market>) {}
 
-  async create(createMarketDto: CreateMarketDto) {
-    const food = new this.marketModel(createMarketDto);
+  async create(name: string, image: string) {
+    const existing = await this.marketModel.findOne({ name });
+    if (existing) {
+      throw new ConflictException('分类名称已存在');
+    }
 
-    return food.save();
+    const category = new this.marketModel({ name, image, foods: [] });
+    return category.save();
   }
 
-  async deleteCategory(name: string) {
-    await this.marketModel.deleteOne({
-      name,
-    });
+  async deleteCategory(id: string) {
+    const category = await this.marketModel.findById(id);
+    if (!category) {
+      throw new NotFoundException('分类不存在');
+    }
 
+    if (category.image) {
+      const fileName = path.basename(category.image);
+      const imagePath = join(
+        __dirname,
+        '../../..',
+        'public/images/market',
+        fileName,
+      );
+      fs.unlinkSync(imagePath);
+    }
+
+    await this.marketModel.findByIdAndDelete(id);
     return '删除成功';
   }
 

@@ -45,7 +45,9 @@ export class MarketService {
         'public/images/market',
         fileName,
       );
-      fs.unlinkSync(imagePath);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
     }
 
     await this.marketModel.findByIdAndDelete(id);
@@ -107,7 +109,9 @@ export class MarketService {
         'public/images/market',
         fileName,
       );
-      fs.unlinkSync(imagePath);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
     }
 
     await this.marketModel.updateOne(
@@ -199,7 +203,9 @@ export class MarketService {
       'public/images/market',
       fileName,
     );
-    fs.unlinkSync(imagePath);
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
     await this.updateFoodWithoutImage(updateFoodDto);
     return '添加成功';
   }
